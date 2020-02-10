@@ -90,7 +90,7 @@ public class Employee {
 	}
 
 
-//this is kind of all automatically generated, so column name salary, tpe double etc.
+
 	public double getSalary() {
 		return salary;
 	}

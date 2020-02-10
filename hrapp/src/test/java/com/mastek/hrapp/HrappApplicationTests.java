@@ -7,10 +7,14 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import com.mastek.hrapp.dao.DepartmentJPADAO;
 import com.mastek.hrapp.dao.EmployeeJPADO;
+import com.mastek.hrapp.dao.PaymentJPADAO;
 import com.mastek.hrapp.dao.ProjectJPADAO;
+import com.mastek.hrapp.entities.CardPayment;
+import com.mastek.hrapp.entities.ChequePayment;
 import com.mastek.hrapp.entities.Department;
 import com.mastek.hrapp.entities.Designation;
 import com.mastek.hrapp.entities.Employee;
+import com.mastek.hrapp.entities.Payment;
 import com.mastek.hrapp.entities.Project;
 import com.mastek.hrapp.services.EmployeeService;
 
@@ -32,6 +36,46 @@ class HrappApplicationTests {
 	@Autowired
 	ProjectJPADAO projectDAO;
 	
+	@Autowired
+	PaymentJPADAO paymentDAO;
+	
+	
+	@Test
+	void testCashPayemnt() {
+		Payment cashP = new Payment();
+		cashP.setAmount(100);
+		
+		cashP = paymentDAO.save(cashP);
+		System.out.println(cashP);
+		assertNotNull(cashP, "Cash PAyment not Stored");
+	}
+	
+	@Test
+	void testCardPayemntAdd() {
+		CardPayment cardP = new CardPayment();
+		cardP.setAmount(2300);
+		cardP.setCardNumber(1237838734);
+		cardP.setCardService("VISA");
+		
+		cardP = paymentDAO.save(cardP);
+		System.out.println(cardP);
+		assertNotNull(cardP, "Card Payment not Stored");
+		
+	}
+	
+	@Test
+	
+	void testChequePayemnt() {
+		ChequePayment cheqP = new ChequePayment();
+		cheqP.setAmount(3400);
+		cheqP.setBankName("RBS");
+		cheqP.setChequeNumber(23333);
+		
+		cheqP = paymentDAO.save(cheqP);
+		System.out.println(cheqP);
+		assertNotNull(cheqP, "Cheque Payment not Stored");
+		
+	}
 	@Test
 	void testEmployeeServiceExampleMehtod() {
 		empSvc.exampleMethod();
