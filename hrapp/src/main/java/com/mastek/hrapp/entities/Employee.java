@@ -16,11 +16,25 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+
+import org.springframework.data.annotation.Transient;
 
 @Entity// this annotation declares the class as entity , which will be managed by JPA
 @Table(name="JPA_Employees")//declares the table name associated with this class
-@EntityListeners({EmployeeListener.class}) //call the appropriate event lstener metho on lifecycle event 
+@EntityListeners({EmployeeListener.class}) //call the appropriate event listener method on life-cycle event 
+@NamedQueries({
+	@NamedQuery(name="Employee.findBySalary",  //declare the query name as the method in DAO
+			query = "select e from Employee e where e.salary between :minSalary and :maxSalary"),
+			//identify the query to fetch employee objects with properties and parameters
+			//these parameters are to be declared using the @param ("<name>") in the DAO interface.
+	@NamedQuery(name="Employee.findByDesignation",
+			query = "select e from Employee e where e.designation = designation")
+	//identify the method in DAO and pass the necessary params 
+
+})
 public class Employee {
 	int empno;
 	String name;
@@ -32,6 +46,7 @@ public class Employee {
 	
 	@ManyToOne// One employee is associated with one of the many departments 
 	@JoinColumn(name="fk_deprtment_number")// the foreign key column to store the associate deptno
+	@Transient//ignore this property when storing employee data in MongoDB, do it on the get method.
 	public Department getCurrentDepartment() {
 		return currentDepartment;
 	}
@@ -49,6 +64,7 @@ public class Employee {
 @ManyToMany(cascade=CascadeType.ALL)// configure many to many associations for entities 
 @JoinTable(name="JPA_PROJECTS_ASSIGNMENT", joinColumns= {@JoinColumn(name="fk_empno")},//provide join table name, FK for current class
 			inverseJoinColumns =  {@JoinColumn(name="fk_projectId")})//fk column for collection
+@Transient
 	public Set<Project> getProjectsAssigned() {
 	return projectsAssigned;
 }
