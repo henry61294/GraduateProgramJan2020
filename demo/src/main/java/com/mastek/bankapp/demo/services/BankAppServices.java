@@ -11,9 +11,11 @@ import org.springframework.stereotype.Component;
 import com.mastek.bankapp.demo.DAO.AccountJPADAO;
 import com.mastek.bankapp.demo.DAO.CustomerJPADAO;
 import com.mastek.bankapp.demo.DAO.TransactionJPADAO;
+import com.mastek.bankapp.demo.DAO.TransferJPADAO;
 import com.mastek.bankapp.demo.entities.Account;
 import com.mastek.bankapp.demo.entities.Customer;
 import com.mastek.bankapp.demo.entities.Transaction;
+import com.mastek.bankapp.demo.entities.Transfer;
 @Component
 @Scope("singleton")
 public class BankAppServices {
@@ -26,6 +28,9 @@ public class BankAppServices {
 	
 	@Autowired
 	TransactionJPADAO traDAO;
+	
+	@Autowired
+	TransferJPADAO trDAO;
 	
 	public BankAppServices() {
 		// TODO Auto-generated constructor stub
@@ -70,4 +75,14 @@ public class BankAppServices {
 		return tra;
 
 	}
+	@Transactional
+	public Transfer assignTrtoTransaction (int transferId, int transactionId) {
+		Transfer tr = trDAO.findById(transferId).get();
+		Transaction tran = traDAO.findById(transactionId).get();
+		
+		tr.getTr().add(tran);
+		trDAO.save(tr);
+		return tr;
+	}
+	
 }

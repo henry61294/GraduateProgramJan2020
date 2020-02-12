@@ -7,6 +7,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import org.springframework.data.annotation.Transient;
 @Entity
 @Table(name="JPA_TRANSACTION")
 public class Transaction {
@@ -17,7 +19,7 @@ public class Transaction {
 	
 	Account linkedAccount;
 	
-	
+	@Transient
 	@ManyToOne
 	@JoinColumn(name="fk_account_number")
 	public Account getLinkedAccount() {
@@ -49,7 +51,7 @@ public class Transaction {
 	public void setAmount(double amount) {
 		this.amount = amount;
 	}
-
+@Transient
 	public String getPaymentType() {
 		return paymentType;
 	}
