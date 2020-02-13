@@ -19,9 +19,14 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.ws.rs.FormParam;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 import org.springframework.data.annotation.Transient;
 
+
+@XmlRootElement //declares the element to be transformed to XML/JSON
 @Entity// this annotation declares the class as entity , which will be managed by JPA
 @Table(name="JPA_Employees")//declares the table name associated with this class
 @EntityListeners({EmployeeListener.class}) //call the appropriate event listener method on life-cycle event 
@@ -37,8 +42,12 @@ import org.springframework.data.annotation.Transient;
 })
 public class Employee {
 	int empno;
+	
+	@FormParam("name")
 	String name;
+	@FormParam("salary")
 	double salary;
+	@FormParam("designation")
 	Designation designation;
 	
 	Department currentDepartment;
@@ -47,6 +56,7 @@ public class Employee {
 	@ManyToOne// One employee is associated with one of the many departments 
 	@JoinColumn(name="fk_deprtment_number")// the foreign key column to store the associate deptno
 	@Transient//ignore this property when storing employee data in MongoDB, do it on the get method.
+	@XmlTransient //ignore the association when shared via Service
 	public Department getCurrentDepartment() {
 		return currentDepartment;
 	}
@@ -65,6 +75,7 @@ public class Employee {
 @JoinTable(name="JPA_PROJECTS_ASSIGNMENT", joinColumns= {@JoinColumn(name="fk_empno")},//provide join table name, FK for current class
 			inverseJoinColumns =  {@JoinColumn(name="fk_projectId")})//fk column for collection
 @Transient
+@XmlTransient
 	public Set<Project> getProjectsAssigned() {
 	return projectsAssigned;
 }
