@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import com.mastek.hrapp.api.DepartmentAPI;
 import com.mastek.hrapp.api.EmployeeAPI;
+import com.mastek.hrapp.api.ProjectAPI;
 import com.mastek.hrapp.dao.DepartmentJPADAO;
 import com.mastek.hrapp.dao.EmployeeJPADO;
 import com.mastek.hrapp.dao.JobPositionDAO;
@@ -21,7 +23,7 @@ import com.mastek.hrapp.entities.Project;
 
 @Component // marking the class as bean to be created
 @Scope("singleton")//singleton: one object used across test cases, prototype: one object per request
-public class EmployeeService implements EmployeeAPI{
+public class EmployeeService implements EmployeeAPI, DepartmentAPI, ProjectAPI{
 	String exampleProperty;
 	
 	@Autowired
@@ -118,6 +120,40 @@ public Employee findByEmpno(int empno) {
 public Employee registerNewEmployee(Employee newEmployee) {
 	newEmployee = empDAO.save(newEmployee);
 	return newEmployee;
+}
+
+@Override
+public Iterable<Project> listAllProjects() {
+	  System.out.println("Listing all Projects");
+	    return projectDAO.findAll();
+}
+
+@Override
+public Project findByprojectId(int projectId) {
+	return projectDAO.findById(projectId).get();
+}
+
+@Override
+public Project registerNewProject(Project newProject) {
+	newProject = projectDAO.save(newProject);
+	return newProject;
+}
+
+@Override
+public Iterable<Department> listAllDepartments() {
+	  System.out.println("Listing all Departments");
+	  return deptDAO.findAll();
+}
+
+@Override
+public Department findBydeptno(int deptno) {
+	return deptDAO.findById(deptno).get();
+}
+
+@Override
+public Department registerNewDepartment(Department newDepartment) {
+	newDepartment= deptDAO.save(newDepartment);
+	return newDepartment;
 }
 
 }

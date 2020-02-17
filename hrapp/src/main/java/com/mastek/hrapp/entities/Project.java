@@ -10,18 +10,24 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-
+import javax.ws.rs.FormParam;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+@XmlRootElement
 @Entity
 @Table(name="JPA_Project")
 	public class Project {
 		int projectId;
+		@FormParam("name")
 		String name;
+		@FormParam("customerName")
 		String customerName;
 		
 		Set<Employee> projectTeam = new HashSet<>();
 		
 		
 		@ManyToMany(mappedBy="projectsAssigned")//provide the property in employee with @manytomany and @joinTbale config.
+		@XmlTransient
 		public Set<Employee> getProjectTeam() {
 			return projectTeam;
 		}
