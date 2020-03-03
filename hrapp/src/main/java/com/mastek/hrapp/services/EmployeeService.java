@@ -1,5 +1,7 @@
 package com.mastek.hrapp.services;
 
+import java.util.Set;
+
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.transaction.Transactional;
@@ -155,6 +157,31 @@ public Department registerNewDepartment(Department newDepartment) {
 	newDepartment= deptDAO.save(newDepartment);
 	return newDepartment;
 }
+
+
+@Override
+    @Transactional // to fetch all collections
+    public Set<Project> getEmployeeProjects(int empno) {
+        Employee currentEmp = empDAO.findById(empno).get();
+        int count = currentEmp.getProjectsAssigned().size();
+        System.out.println(count+" Projects Found");
+        Set<Project> projects = currentEmp.getProjectsAssigned();
+        return projects;
+    }
+
+
+
+    @Override
+    @Transactional
+    public Project registerProjectForEmployee(int empno, Project newProject) {
+        newProject = projectDAO.save(newProject);
+        assignEmployeeToProject(empno, newProject.getProjectId());
+        return newProject;
+    }
+
+
+
+
 
 }
 	

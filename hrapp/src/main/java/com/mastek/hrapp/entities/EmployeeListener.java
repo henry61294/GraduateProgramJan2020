@@ -15,7 +15,7 @@ public class EmployeeListener {
 	//@<lifecyle-event>
 	//public void <method-name>()
 	
-	@PrePersist //call this method before nserting each emp object in the employee table 
+	@PrePersist //call this method before inserting each emp object in the employee table 
 	public void beforeEmpInsert(Employee e) {
 		System.out.println("before employee insert");
 		System.out.println("raise laptop request for "+ e.getName());
