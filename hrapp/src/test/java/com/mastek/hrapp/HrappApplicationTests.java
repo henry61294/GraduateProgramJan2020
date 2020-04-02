@@ -20,7 +20,7 @@ import com.mastek.hrapp.entities.Payment;
 import com.mastek.hrapp.entities.Project;
 import com.mastek.hrapp.services.EmployeeService;
 
-@SpringBootTest
+//@SpringBootTest
 class HrappApplicationTests {
 	
 	@Autowired//spring will provide the object using IOC, dependency injection technique
