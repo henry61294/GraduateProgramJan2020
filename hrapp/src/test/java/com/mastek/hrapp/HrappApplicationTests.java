@@ -59,18 +59,18 @@ class HrappApplicationTests {
 		assertNotNull(jp, "job position not saved");
 	}
 	
-	@Test
-	void testApplyForJobPositions() {
-		int jobId = 125;
-		int empno  = 6;		
-		JobPosition jp = empSvc.applyForJobPosition(jobId, empno);
-		
-		assertNotNull(jp, "job positions not  applied");
-		System.out.println("applications for job id: "+ jobId);
-		for(Employee applicant : jp.getApplicants()) {
-			System.out.println(applicant);
-		}
-	}
+//	@Test
+//	void testApplyForJobPositions() {
+//		int jobId = 125;
+//		int empno  = 6;		
+//		JobPosition jp = empSvc.applyForJobPosition(jobId, empno);
+//		
+//		assertNotNull(jp, "job positions not  applied");
+//		System.out.println("applications for job id: "+ jobId);
+//		for(Employee applicant : jp.getApplicants()) {
+//			System.out.println(applicant);
+//		}
+//	}
 	
 	@Test
 	void testListAllJobPositions() {
@@ -171,80 +171,80 @@ class HrappApplicationTests {
 			System.out.println(employee);
 		}
 	}
-	@Test
-	void testDepartmentDAOAdd() {
-		Department dept = new Department();
-		dept.setName("Admin");
-		dept.setLocation("UK");
-		
-		dept = deptDAO.save(dept);
-		
-		System.out.println(dept);
-		assertNotNull((dept), "dept not stored");
-	}
-	
-	@Test
-	void TestListDepartment() {
-		Iterable<Department> depts = deptDAO.findAll();
-		assertNotNull((depts), "dept not found");
-		for (Department department : depts) {
-			System.out.println(department);
-		}
-	}
-	@Test
-	void testProjectDAOAdd() {
-		Project proj = new Project();
-		proj.setCustomerName("NHS");
-		proj.setName("project name test");;
-		
-		proj = projectDAO.save(proj);
-		
-		System.out.println(proj);
-		assertNotNull((proj), "Project not stored");
-	}
-	
-	@Test
-	void TestListProject() {
-		Iterable<Project> projs = projectDAO.findAll();
-		assertNotNull((projs), "Project not found");
-		for (Project projects : projs) {
-			System.out.println(projects);
-		}
-	}
-	
-	@Test
-	void testUpdateEmployees() {
-		Employee emp = empDAO.findById(1).get();
-		System.out.println("Employee Fetched "+emp);
-		
-		emp.setSalary(emp.getSalary()+1001);
-		emp.setDesignation(Designation.TESTER);
-		
-		emp = empDAO.save(emp);
-		
-		System.out.println("epdated Employee: "+emp);
-		
-	}
-	
-	@Test
-	void testDeleteEmployeeById() {
-		//empDAO.delete(emp);			deletes by object
-		//empDAO.deleteById(21); //		deletes by ID
-		
-	}
-	
-	@Test
-	void testAssignEmployeeToDepartment() {
-		//empSvc.assignEmployeeToDepartment(empno,deptno);
-		Employee emp = empSvc.assignEmployeeToDepartment(24,16);
-		assertNotNull(emp.getCurrentDepartment(), "Deprtment not Assigned");
-	}
-	
-	@Test
-	void testAssignEmployeeToProject() { //empno project id
-		Employee emp = empSvc.assignEmployeeToProject(24,17);
-		assertTrue(emp.getProjectsAssigned().size()>0, "Project not Assigned");
-	}
-	
+//	@Test
+//	void testDepartmentDAOAdd() {
+//		Department dept = new Department();
+//		dept.setName("Admin");
+//		dept.setLocation("UK");
+//		
+//		dept = deptDAO.save(dept);
+//		
+//		System.out.println(dept);
+//		assertNotNull((dept), "dept not stored");
+//	}
+//	
+//	@Test
+//	void TestListDepartment() {
+//		Iterable<Department> depts = deptDAO.findAll();
+//		assertNotNull((depts), "dept not found");
+//		for (Department department : depts) {
+//			System.out.println(department);
+//		}
+//	}
+//	@Test
+//	void testProjectDAOAdd() {
+//		Project proj = new Project();
+//		proj.setCustomerName("NHS");
+//		proj.setName("project name test");;
+//		
+//		proj = projectDAO.save(proj);
+//		
+//		System.out.println(proj);
+//		assertNotNull((proj), "Project not stored");
+//	}
+//	
+//	@Test
+//	void TestListProject() {
+//		Iterable<Project> projs = projectDAO.findAll();
+//		assertNotNull((projs), "Project not found");
+//		for (Project projects : projs) {
+//			System.out.println(projects);
+//		}
+//	}
+//	
+//	@Test
+//	void testUpdateEmployees() {
+//		Employee emp = empDAO.findById(1).get();
+//		System.out.println("Employee Fetched "+emp);
+//		
+//		emp.setSalary(emp.getSalary()+1001);
+//		emp.setDesignation(Designation.TESTER);
+//		
+//		emp = empDAO.save(emp);
+//		
+//		System.out.println("epdated Employee: "+emp);
+//		
+//	}
+//	
+//	@Test
+//	void testDeleteEmployeeById() {
+//		//empDAO.delete(emp);			deletes by object
+//		//empDAO.deleteById(21); //		deletes by ID
+//		
+//	}
+//	
+//	@Test
+//	void testAssignEmployeeToDepartment() {
+//		//empSvc.assignEmployeeToDepartment(empno,deptno);
+//		Employee emp = empSvc.assignEmployeeToDepartment(24,16);
+//		assertNotNull(emp.getCurrentDepartment(), "Deprtment not Assigned");
+//	}
+//	
+//	@Test
+//	void testAssignEmployeeToProject() { //empno project id
+//		Employee emp = empSvc.assignEmployeeToProject(24,17);
+//		assertTrue(emp.getProjectsAssigned().size()>0, "Project not Assigned");
+//	}
+//	
 	
 };
